@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # Use Windows for .NET Framework support
+    runs-on: windows-latest  # Windows-based runner for .NET Framework
 
     steps:
     - name: Checkout code
@@ -19,16 +19,16 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '7.0'  # Keep .NET SDK installed, but note you're still targeting .NET Framework
+        dotnet-version: '7.0'  # Still use .NET SDK but targeting .NET Framework 4.5.2
 
     - name: Restore dependencies
-      run: dotnet restore MusicPlayerApp.sln
+      run: dotnet restore MusicPlayerApp.sln  # Restore dependencies
 
     - name: Clean Solution
-      run: dotnet clean MusicPlayerApp.sln
+      run: dotnet clean MusicPlayerApp.sln  # Clean solution
 
     - name: Build Solution
-      run: dotnet build MusicPlayerApp.sln --configuration Release
+      run: dotnet build MusicPlayerApp.sln --configuration Release  # Build the solution
 
     - name: Run SonarCloud Analysis (Begin)
       uses: SonarSource/sonarcloud-github-action@v1
@@ -40,7 +40,7 @@ jobs:
 
     - name: Run Tests
       run: |
-        dotnet test MusicPlayerApp.sln --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"
+        dotnet test MusicPlayerApp.sln --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"  # Run tests
 
     - name: Run SonarCloud Analysis (End)
       uses: SonarSource/sonarcloud-github-action@v1
@@ -49,4 +49,4 @@ jobs:
         sonar-org: "kavana179"
         sonar-host-url: "https://sonarcloud.io"
         sonar-login: ${{ secrets.SONAR_TOKEN }}
-        sonar-scanner-args: "-Dsonar.coverageReportPaths=test-results.trx"
+        sonar-scanner-args: "-Dsonar.coverageReportPaths=test-results.trx"  # End analysis

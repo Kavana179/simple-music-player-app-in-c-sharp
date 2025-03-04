@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # Windows-based runner for .NET Framework
+    runs-on: windows-latest  # Ensure that Windows runner is used
 
     steps:
     - name: Checkout code
@@ -19,7 +19,7 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '7.0'  # Still use .NET SDK but targeting .NET Framework 4.5.2
+        dotnet-version: '7.0'  # Use .NET SDK, but for .NET Framework, the SDK itself is not required
 
     - name: Restore dependencies
       run: dotnet restore MusicPlayerApp.sln  # Restore dependencies

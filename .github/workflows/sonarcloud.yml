@@ -24,12 +24,6 @@ jobs:
     - name: List files (check file paths)
       run: ls -R
 
-    - name: Install SonarScanner
-      run: |
-        dotnet tool install --global dotnet-sonarscanner
-
-    
-
     - name: Restore dependencies
       run: dotnet restore MusicPlayerApp.sln
 
@@ -39,15 +33,23 @@ jobs:
     - name: Build Solution
       run: dotnet build MusicPlayerApp.sln --configuration Release
 
-    - name: Run SonarScanner Begin
-      run: |
-        echo "Running SonarScanner in directory: $(pwd)"
-        dotnet sonarscanner begin /k:"Kavana179_simple-music-player-app-in-c-sharp" /o:"kavana179" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /s:"MusicPlayerApp.sln" /d:sonar.verbose=true
+    - name: Run SonarCloud Analysis (Begin)
+      uses: SonarSource/sonarcloud-github-action@v1
+      with:
+        sonar-project-key: "Kavana179_simple-music-player-app-in-c-sharp"
+        sonar-org: "kavana179"
+        sonar-host-url: "https://sonarcloud.io"
+        sonar-login: ${{ secrets.SONAR_TOKEN }}
 
     - name: Run Tests
       run: |
         dotnet test MusicPlayerApp.sln --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"
 
-    - name: Run SonarScanner End
-      run: |
-        dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+    - name: Run SonarCloud Analysis (End)
+      uses: SonarSource/sonarcloud-github-action@v1
+      with:
+        sonar-project-key: "Kavana179_simple-music-player-app-in-c-sharp"
+        sonar-org: "kavana179"
+        sonar-host-url: "https://sonarcloud.io"
+        sonar-login: ${{ secrets.SONAR_TOKEN }}
+        sonar-scanner-args: "-Dsonar.coverageReportPaths=test-results.trx"

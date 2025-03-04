@@ -1,16 +1,16 @@
-name: SonarCloud Analysis
+name: Build and Analyze with SonarCloud
 
 on:
   push:
     branches:
-      - master  # Adjust as needed
+      - master
   pull_request:
     branches:
-      - master  # Adjust as needed
+      - master
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # or windows-latest if you're using Windows
+    runs-on: windows-latest  # Use Windows for .NET Framework support
 
     steps:
     - name: Checkout code
@@ -19,10 +19,7 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '7.0'
-
-    - name: List files (check file paths)
-      run: ls -R
+        dotnet-version: '7.0'  # Keep .NET SDK installed, but note you're still targeting .NET Framework
 
     - name: Restore dependencies
       run: dotnet restore MusicPlayerApp.sln

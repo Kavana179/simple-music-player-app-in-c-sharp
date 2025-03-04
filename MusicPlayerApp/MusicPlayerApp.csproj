@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MusicPlayerApp</RootNamespace>
     <AssemblyName>MusicPlayerApp</AssemblyName>
-    <TargetFrameworkVersion>net7.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>net452</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
